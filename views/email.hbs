@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+</head>
+<body>
+   <div>
+    <input type="text" id="subject" name="subject" placeholder="subject" /><br>
+    <input type="text" id="name" name="name" placeholder="name" /><br>
+    <input type="text" id="mail" name="mail" placeholder="mail" /><br>
+    <input type="text" id="tel" name="tel" placeholder="tel" /><br>
+    <input type="text" id="message" name="message" placeholder="message" /><br>
+    <button  onclick="func()"> click me </button>
+   </div>
+    <script>
+        function func(){
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            const subject = document.getElementById("subject").value;
+            const name = document.getElementById("name").value;
+            const mail = document.getElementById("mail").value;
+            const tel = document.getElementById("tel").value;
+            const message = document.getElementById("message").value;
+
+            //run this code only if the fileds are valitied 
+            var urlencoded = new URLSearchParams();
+            urlencoded.append("subject", subject);
+            urlencoded.append("name", name);
+            urlencoded.append("mail", mail);
+            urlencoded.append("tel", tel);
+            urlencoded.append("message", message);
+
+            var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+            };
+
+            fetch("/contact", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</body>
+</html>
